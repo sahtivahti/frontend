@@ -11,12 +11,15 @@ import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import Copyright from './Copyright';
 import RecentBrew from './RecentBrew';
 import MenuItems from './MenuItems';
+import { Route, Switch } from 'react-router-dom';
+import Recipes from './Recipes';
+import Brew from './Brew';
+import { Paper } from '@material-ui/core';
 
 const drawerWidth = 240;
 
@@ -152,7 +155,17 @@ const Dashboard: React.FC = () => {
           <Grid container spacing={3}>
             <Grid item xs={12}>
               <Paper className={classes.paper}>
-                <RecentBrew />
+                <Switch>
+                  <Route path="/recipes">
+                    <Recipes />
+                  </Route>
+                  <Route path="/brew">
+                    <Brew />
+                  </Route>
+                  <Route path="/">
+                    <RecentBrew />
+                  </Route>
+                </Switch>
               </Paper>
             </Grid>
           </Grid>

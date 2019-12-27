@@ -1,5 +1,6 @@
 import React from 'react';
 import { Typography, Link } from '@material-ui/core';
+import packagejson from '../../package.json';
 
 const Copyright: React.FC = () => {
     return (
@@ -10,6 +11,9 @@ const Copyright: React.FC = () => {
             </Link>{' '}
             {new Date().getFullYear()}
             {'.'}
+            {' '}
+            Version{' '}
+            {packagejson.version}
         </Typography>
     );
 };
