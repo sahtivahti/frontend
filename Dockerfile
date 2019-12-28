@@ -14,4 +14,5 @@ RUN yarn run build
 # Host built static files
 FROM nginx:1.17.6-alpine
 
+COPY ./docker/nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=builder /app/build /usr/share/nginx/html
