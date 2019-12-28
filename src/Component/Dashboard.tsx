@@ -20,6 +20,7 @@ import { Route, Switch } from 'react-router-dom';
 import Recipes from './Recipes';
 import Brew from './Brew';
 import { Paper } from '@material-ui/core';
+import Profile from './Profile';
 
 const drawerWidth = 240;
 
@@ -131,6 +132,7 @@ const Dashboard: React.FC = () => {
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
             Sahtivahti
           </Typography>
+          <Profile />
         </Toolbar>
       </AppBar>
       <Drawer
