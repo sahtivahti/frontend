@@ -3,10 +3,12 @@ import Recipe from '../Model/Recipe';
 import api from '../Service/Api';
 import { Table, TableHead, TableRow, TableCell, TableBody, CircularProgress } from '@material-ui/core';
 import Title from './Title';
+import { Link, useRouteMatch } from 'react-router-dom';
 
 const Recipes: React.FC = () => {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [loading, setLoading] = useState<Boolean>(false);
+  const { url } = useRouteMatch();
 
   useEffect(() => {
     (async () => {
@@ -34,7 +36,7 @@ const Recipes: React.FC = () => {
         <TableBody>
         {recipes.map((recipe: Recipe) => (
           <TableRow key={recipe.id}>
-            <TableCell>{recipe.name}</TableCell>
+            <TableCell><Link to={`${url}/${recipe.id}`}>{recipe.name}</Link></TableCell>
             <TableCell>{recipe.author}</TableCell>
           </TableRow>
         ))}

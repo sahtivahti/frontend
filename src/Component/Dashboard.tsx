@@ -21,6 +21,7 @@ import Recipes from './Recipes';
 import Brew from './Brew';
 import { Paper } from '@material-ui/core';
 import Profile from './Profile';
+import RecipeView from './RecipeView';
 
 const drawerWidth = 240;
 
@@ -158,8 +159,11 @@ const Dashboard: React.FC = () => {
             <Grid item xs={12}>
               <Paper className={classes.paper}>
                 <Switch>
-                  <Route path="/recipes">
+                  <Route exact path="/recipes">
                     <Recipes />
+                  </Route>
+                  <Route path="/recipes/:id">
+                    <RecipeView />
                   </Route>
                   <Route path="/brew">
                     <Brew />
