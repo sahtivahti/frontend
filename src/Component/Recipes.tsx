@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import Recipe from '../Model/Recipe';
 import api from '../Service/Api';
-import { Table, TableHead, TableRow, TableCell, TableBody, CircularProgress } from '@material-ui/core';
+import { Table, TableHead, TableRow, TableCell, TableBody, CircularProgress, Grid } from '@material-ui/core';
 import Title from './Title';
 import { Link, useRouteMatch } from 'react-router-dom';
+import NewRecipeButton from './NewRecipeButton';
 
 const Recipes: React.FC = () => {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
@@ -25,7 +26,15 @@ const Recipes: React.FC = () => {
 
   return (
     <React.Fragment>
-      <Title>My recipes</Title>
+      <Grid container direction="row" alignContent="space-between">
+        <Grid item xs>
+          <Title>My recipes</Title>
+        </Grid>
+        <Grid item>
+          <NewRecipeButton />
+        </Grid>
+      </Grid>
+      
       <Table>
         <TableHead>
           <TableRow>

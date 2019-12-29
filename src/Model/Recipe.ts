@@ -1,5 +1,5 @@
 export default class Recipe {
-  constructor(data: any) {
+  constructor(data?: any) {
     Object.assign(this, data);
   }
 
