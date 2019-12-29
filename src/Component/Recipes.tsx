@@ -6,6 +6,7 @@ import Title from './Title';
 import { Link, useRouteMatch } from 'react-router-dom';
 import NewRecipeButton from './NewRecipeButton';
 import Paper from './Paper';
+import Shrug from './Shrug';
 
 const Recipes: React.FC = () => {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
@@ -22,7 +23,7 @@ const Recipes: React.FC = () => {
   }, []);
 
   if (loading) {
-   return <CircularProgress />;
+   return <Paper><CircularProgress /></Paper>;
   }
 
   return (
@@ -35,8 +36,10 @@ const Recipes: React.FC = () => {
           <NewRecipeButton />
         </Grid>
       </Grid>
+
+      {recipes.length === 0 && <Shrug text="There are no recipes yet!" />}
       
-      <Table>
+      {recipes.length > 0 && (<Table>
         <TableHead>
           <TableRow>
             <TableCell>Name</TableCell>
@@ -51,7 +54,7 @@ const Recipes: React.FC = () => {
           </TableRow>
         ))}
         </TableBody>
-      </Table>
+      </Table>)}
     </Paper>
   );
 };
