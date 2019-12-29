@@ -6,6 +6,7 @@ import Recipe from '../Model/Recipe';
 import api from '../Service/Api';
 import moment from 'moment';
 import Paper from './Paper';
+import RemoveRecipeButton from './RemoveRecipeButton';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -62,7 +63,14 @@ const RecipeDetails: React.FC = () => {
 
   return (
     <React.Fragment>
-      <Title>Editing recipe {id}</Title>
+      <Grid container direction="row" alignContent="space-between" alignItems="flex-start">
+        <Grid item xs>
+          <Title>Editing recipe {id}</Title>
+        </Grid>
+        <Grid item>
+          <RemoveRecipeButton recipeId={recipe.id} />
+        </Grid>
+      </Grid>
 
       <Typography variant="body2">{createdAt}, {updatedAt}</Typography>
 
