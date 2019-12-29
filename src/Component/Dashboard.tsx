@@ -19,7 +19,6 @@ import MenuItems from './MenuItems';
 import { Route, Switch } from 'react-router-dom';
 import Recipes from './Recipes';
 import Brew from './Brew';
-import { Paper } from '@material-ui/core';
 import Profile from './Profile';
 import RecipeDetails from './RecipeDetails';
 
@@ -93,12 +92,6 @@ const useStyles = makeStyles(theme => ({
     paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(4),
   },
-  paper: {
-    padding: theme.spacing(2),
-    display: 'flex',
-    overflow: 'auto',
-    flexDirection: 'column',
-  },
   fixedHeight: {
     height: 240,
   },
@@ -157,22 +150,20 @@ const Dashboard: React.FC = () => {
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing={3}>
             <Grid item xs={12}>
-              <Paper className={classes.paper}>
-                <Switch>
-                  <Route exact path="/recipes">
-                    <Recipes />
-                  </Route>
-                  <Route path="/recipes/:id">
-                    <RecipeDetails />
-                  </Route>
-                  <Route path="/brew">
-                    <Brew />
-                  </Route>
-                  <Route path="/">
-                    <RecentBrew />
-                  </Route>
-                </Switch>
-              </Paper>
+              <Switch>
+                <Route exact path="/recipes">
+                  <Recipes />
+                </Route>
+                <Route path="/recipes/:id">
+                  <RecipeDetails />
+                </Route>
+                <Route path="/brew">
+                  <Brew />
+                </Route>
+                <Route path="/">
+                  <RecentBrew />
+                </Route>
+              </Switch>
             </Grid>
           </Grid>
           <Box pt={4}>
