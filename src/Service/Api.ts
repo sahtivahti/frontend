@@ -22,6 +22,14 @@ class Api {
     return new Recipe(response.data);
   }
 
+  public async getRecipeDetailsById(id: number): Promise<Recipe> {
+    const client: AxiosInstance = await this.createClient();
+    
+    const response = await client.get<Recipe>('/v1/recipe/' + id);
+
+    return new Recipe(response.data);
+  }
+
   private async createClient(): Promise<any> {
     if (!this.client) {
       const token = await getTokenSilently();

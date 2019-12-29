@@ -5,6 +5,7 @@ import { Table, TableHead, TableRow, TableCell, TableBody, CircularProgress, Gri
 import Title from './Title';
 import { Link, useRouteMatch } from 'react-router-dom';
 import NewRecipeButton from './NewRecipeButton';
+import Paper from './Paper';
 
 const Recipes: React.FC = () => {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
@@ -25,7 +26,7 @@ const Recipes: React.FC = () => {
   }
 
   return (
-    <React.Fragment>
+    <Paper>
       <Grid container direction="row" alignContent="space-between">
         <Grid item xs>
           <Title>My recipes</Title>
@@ -51,7 +52,7 @@ const Recipes: React.FC = () => {
         ))}
         </TableBody>
       </Table>
-    </React.Fragment>
+    </Paper>
   );
 };
 

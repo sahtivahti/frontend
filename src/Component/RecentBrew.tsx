@@ -1,12 +1,13 @@
 import React from 'react';
 import Title from './Title';
+import Paper from './Paper';
 
 const RecentBrew: React.FC = () => {
   return (
-    <React.Fragment>
+    <Paper>
       <Title>Recent Brew</Title>
       No recent brew :(
-    </React.Fragment>
+    </Paper>
   );
 };
 
