@@ -30,6 +30,12 @@ class Api {
     return new Recipe(response.data);
   }
 
+  public async removeRecipeById(id: number): Promise<void> {
+    const client: AxiosInstance = await this.createClient();
+
+    await client.delete('/v1/recipe/' + id);
+  }
+
   private async createClient(): Promise<any> {
     if (!this.client) {
       const token = await getTokenSilently();
