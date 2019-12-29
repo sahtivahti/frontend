@@ -2,7 +2,7 @@ import React from 'react';
 import Title from './Title';
 import { useParams } from 'react-router-dom';
 
-const RecipeView: React.FC = () => {
+const RecipeDetails: React.FC = () => {
   const { id } = useParams();
 
   return (
@@ -12,4 +12,4 @@ const RecipeView: React.FC = () => {
   );
 };
 
-export default RecipeView;
+export default RecipeDetails;
