@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import Title from './Title';
 import { useParams } from 'react-router-dom';
-import { CircularProgress, TextField, Grid, makeStyles, Theme, createStyles, Paper, Typography } from '@material-ui/core';
+import { CircularProgress, TextField, Grid, makeStyles, Theme, createStyles, Typography } from '@material-ui/core';
 import Recipe from '../Model/Recipe';
 import api from '../Service/Api';
 import moment from 'moment';
+import Paper from './Paper';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -13,9 +14,6 @@ const useStyles = makeStyles((theme: Theme) =>
         margin: theme.spacing(1),
         marginLeft: 0
       },
-    },
-    paper: {
-      padding: theme.spacing(2)
     }
   }),
 );
@@ -68,7 +66,7 @@ const RecipeDetails: React.FC = () => {
 
       <Grid container>
         <Grid item xs={12} md={4}>
-          <Paper className={classes.paper}>
+          <Paper>
             <Title size="small">Basics</Title>
 
             <form className={classes.root}>
