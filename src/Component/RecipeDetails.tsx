@@ -64,6 +64,10 @@ const RecipeDetails: React.FC = () => {
     <React.Fragment>
       <Title>Editing recipe {id}</Title>
 
+      <Typography variant="body2">{createdAt}, {updatedAt}</Typography>
+
+      <br />
+
       <Grid container>
         <Grid item xs={12} md={4}>
           <Paper>
@@ -85,10 +89,6 @@ const RecipeDetails: React.FC = () => {
                 disabled
                 fullWidth
               />
-
-              <Typography variant="body2">
-                {createdAt}, {updatedAt}
-              </Typography>
             </form>
           </Paper>
         </Grid>
