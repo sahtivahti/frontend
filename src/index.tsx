@@ -10,7 +10,7 @@ ReactDOM.render(
     domain={config.auth0.domain}
     client_id={config.auth0.clientId}
     redirect_uri={window.location.origin}
-    audience="https://api.sahtivahti.fi"
+    audience={config.auth0.audience}
     logout
   >
     <App />
