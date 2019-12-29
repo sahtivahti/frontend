@@ -1,4 +1,5 @@
-export default class Auth0Config {
-  public domain: string = '';
-  public clientId: string = '';
+export default interface Auth0Config {
+  domain: string;
+  clientId: string;
+  audience: string;
 }

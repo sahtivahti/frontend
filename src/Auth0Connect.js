@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react';
 import createAuth0Client from '@auth0/auth0-spa-js';
 
+// Cache auth0Client instance
+let auth0ClientCache
+
 const DEFAULT_REDIRECT_CALLBACK = () =>
   window.history.replaceState({}, document.title, window.location.pathname);
 
@@ -20,6 +23,7 @@ export const Auth0Provider = ({
     const initAuth0 = async () => {
       const auth0FromHook = await createAuth0Client(initOptions);
       setAuth0(auth0FromHook);
+      auth0ClientCache = auth0FromHook
 
       if (window.location.search.includes('code=')) {
         const { appState } = await auth0FromHook.handleRedirectCallback();
@@ -40,6 +44,7 @@ export const Auth0Provider = ({
     initAuth0();
     // eslint-disable-next-line
   }, []);
+
 
   const handleRedirectCallback = async () => {
     setLoading(true);
@@ -66,3 +71,7 @@ export const Auth0Provider = ({
     </Auth0Context.Provider>
   );
 };
+
+export const getTokenSilently = async () => {
+  return await auth0ClientCache.getTokenSilently();
+}
