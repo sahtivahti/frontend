@@ -3,19 +3,14 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { Auth0Provider } from './Auth0Connect';
-import Auth0Config from './Model/Auth0Config';
-
-if (!('auth0Config' in window)) {
-  console.error('Can\'t find auth0Config!');
-}
-
-const config: Auth0Config = (window as any).auth0Config;
+import config from './Service/AppConfig';
 
 ReactDOM.render(
   <Auth0Provider
-    domain={config.domain}
-    client_id={config.clientId}
+    domain={config.auth0.domain}
+    client_id={config.auth0.clientId}
     redirect_uri={window.location.origin}
+    audience="https://api.sahtivahti.fi"
     logout
   >
     <App />
