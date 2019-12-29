@@ -29,7 +29,7 @@ const Confirm: React.FC<Props> = (props: Props) => {
             Cancel
           </Button>
           <Button onClick={() => onClose(true)} color="primary" autoFocus>
-            Agree
+            Ok
           </Button>
         </DialogActions>
       </Dialog>
