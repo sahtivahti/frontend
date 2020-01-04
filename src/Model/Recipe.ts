@@ -6,6 +6,8 @@ export default class Recipe {
   public id: number = 0;
   public name: string = '';
   public author: string = '';
+  public style: string = '';
+  public batchSize: number = 0;
   public createdAt: Date|null = null;
   public updatedAt: Date|null = null;
 }

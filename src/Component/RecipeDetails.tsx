@@ -97,6 +97,23 @@ const RecipeDetails: React.FC = () => {
                 disabled
                 fullWidth
               />
+
+              <TextField
+                id="style"
+                value={recipe.style}
+                onChange={handleChange('style')}
+                label="Style"
+                fullWidth
+              />
+
+              <TextField
+                id="batchSize"
+                type="number"
+                value={recipe.batchSize}
+                onChange={handleChange('batchSize')}
+                label="Batch size (l)"
+                fullWidth
+              />
             </form>
           </Paper>
         </Grid>
