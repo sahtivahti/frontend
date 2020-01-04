@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Title from './Title';
 import { useParams } from 'react-router-dom';
-import { CircularProgress, TextField, Grid, makeStyles, Theme, createStyles, Typography } from '@material-ui/core';
+import { CircularProgress, TextField, Grid, makeStyles, Theme, createStyles, Typography, Button } from '@material-ui/core';
 import Recipe from '../Model/Recipe';
 import api from '../Service/Api';
 import moment from 'moment';
@@ -25,10 +25,19 @@ const RecipeDetails: React.FC = () => {
 
   const [loading, setLoading] = useState<boolean>(true);
   const [recipe, setRecipe] = useState<Recipe|null>();
+  const [saving, setSaving] = useState<boolean>(false);
 
   const handleChange = (key: string) => (e: any) => {
-    setRecipe({ ...recipe, [key]: e.target.value } as Recipe);
-  }
+    setRecipe(new Recipe({ ...recipe, [key]: e.target.value }));
+  };
+
+  const handleSave = async () => {
+    setSaving(true);
+    const result = await api.updateRecipe(recipe as Recipe);
+
+    setRecipe(result);
+    setSaving(false);
+  };
 
   useEffect(() => {
     (async () => {
@@ -97,7 +106,35 @@ const RecipeDetails: React.FC = () => {
                 disabled
                 fullWidth
               />
+
+              <TextField
+                id="style"
+                value={recipe.style}
+                onChange={handleChange('style')}
+                label="Style"
+                fullWidth
+              />
+
+              <TextField
+                id="batchSize"
+                type="number"
+                value={recipe.batchSize}
+                onChange={handleChange('batchSize')}
+                label="Batch size (l)"
+                fullWidth
+              />
             </form>
+
+            <Grid container direction="row" justify="flex-end">
+              <Button 
+                variant="contained" 
+                color="primary"
+                onClick={handleSave}
+                disabled={saving}
+              >
+                Save
+              </Button>
+            </Grid>
           </Paper>
         </Grid>
 
