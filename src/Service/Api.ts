@@ -22,6 +22,16 @@ class Api {
     return new Recipe(response.data);
   }
 
+  public async updateRecipe(recipe: Recipe): Promise<Recipe> {
+    const client: AxiosInstance = await this.createClient();
+
+    recipe.batchSize = +recipe.batchSize;
+
+    const response = await client.put<Recipe>('/v1/recipe/' + recipe.id, recipe);
+
+    return new Recipe(response.data);
+  }
+
   public async getRecipeDetailsById(id: number): Promise<Recipe> {
     const client: AxiosInstance = await this.createClient();
     
