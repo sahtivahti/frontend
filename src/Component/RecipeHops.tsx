@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Recipe from '../Model/Recipe';
 import Paper from './Paper';
-import { Grid, Button, Table, TableHead, TableRow, TableCell, TableBody, IconButton } from '@material-ui/core';
+import { Grid, Button, Table, TableHead, TableRow, TableCell, TableBody, IconButton, CircularProgress } from '@material-ui/core';
 import Title from './Title';
 import NewHopDialog from './NewHopDialog';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -16,6 +16,7 @@ type Props = {
 
 const RecipeHops: React.FC<Props> = ({ recipe, onHopAdded, onHopRemoved }) => {
   const [newHopDialogOpen, setNewHopDialogOpen] = useState<boolean>(false);
+  const [hopRemovals, setHopRemovals] = useState<number[]>([]);
 
   const handleAddNewHop = async () => {
     setNewHopDialogOpen(true);
@@ -40,8 +41,12 @@ const RecipeHops: React.FC<Props> = ({ recipe, onHopAdded, onHopRemoved }) => {
       }
   
       const hop = recipe.hops[hopIndex];
+      setHopRemovals([...hopRemovals, hop.id]);
   
       await api.removeHopFromRecipe(hop.id, recipe.id);
+
+      hopRemovals.splice(hopRemovals.indexOf(hop.id), 1);
+      setHopRemovals([...hopRemovals]);
 
       onHopRemoved(hop);
     };
@@ -77,7 +82,10 @@ const RecipeHops: React.FC<Props> = ({ recipe, onHopAdded, onHopRemoved }) => {
               <TableCell>n/a</TableCell>
               <TableCell>
                 <IconButton size="small" onClick={handleRemoveHop(i)}>
-                  <DeleteIcon />
+                  {hopRemovals.indexOf(hop.id) >= 0 ?
+                    <CircularProgress size={24} /> : 
+                    <DeleteIcon />
+                  }
                 </IconButton>
               </TableCell>
             </TableRow>
