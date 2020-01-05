@@ -7,6 +7,8 @@ import api from '../Service/Api';
 import Paper from './Paper';
 import RemoveRecipeButton from './RemoveRecipeButton';
 import RecipeTimestamps from './RecipeTimestamps';
+import Hop from '../Model/Hop';
+import NewHopDialog from './NewHopDialog';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -26,6 +28,7 @@ const RecipeDetails: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [recipe, setRecipe] = useState<Recipe|null>();
   const [saving, setSaving] = useState<boolean>(false);
+  const [newHopDialogOpen, setNewHopDialogOpen] = useState<boolean>(false);
 
   const handleChange = (key: string) => (e: any) => {
     setRecipe(new Recipe({ ...recipe, [key]: e.target.value }));
@@ -36,6 +39,24 @@ const RecipeDetails: React.FC = () => {
     const result = await api.updateRecipe(recipe as Recipe);
 
     setRecipe(result);
+    setSaving(false);
+  };
+
+  const handleAddNewHop = async () => {
+    setNewHopDialogOpen(true);
+  };
+
+  const handleNewHopDialogResult = async (hop?: Hop) => {
+    setNewHopDialogOpen(false);
+    
+    if (!hop || !recipe) {
+      return;
+    }
+
+    setSaving(true);
+    const result = await api.addHopToRecipe(hop, recipe.id);
+    recipe.hops.push(result);
+
     setSaving(false);
   };
 
@@ -131,7 +152,16 @@ const RecipeDetails: React.FC = () => {
 
         <Grid item xs>
           <Paper>
-            <Title size="small">Hops</Title>
+            <Grid container direction="row">
+              <Grid item xs>
+                <Title size="small">Hops</Title>
+              </Grid>
+              <Grid item>
+                <Button color="primary" onClick={handleAddNewHop}>
+                  New hop
+                </Button>
+              </Grid>
+            </Grid>
 
             <Table>
               <TableHead>
@@ -144,7 +174,7 @@ const RecipeDetails: React.FC = () => {
               <TableBody>
                 {recipe.hops.map((hop, i) => (
                   <TableRow key={i}>
-                    <TableCell>{hop.name}</TableCell>
+                    <TableCell component="th">{hop.name}</TableCell>
                     <TableCell>{hop.quantity}</TableCell>
                     <TableCell>n/a</TableCell>
                   </TableRow>
@@ -154,6 +184,8 @@ const RecipeDetails: React.FC = () => {
           </Paper>
         </Grid>
       </Grid>
+
+      <NewHopDialog open={newHopDialogOpen} onClose={handleNewHopDialogResult} />
     </React.Fragment>
   );
 };

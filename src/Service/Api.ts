@@ -2,6 +2,7 @@ import config from './AppConfig';
 import Recipe from '../Model/Recipe';
 import { getTokenSilently } from '../Auth0Connect';
 import axios, { AxiosInstance } from 'axios';
+import Hop from '../Model/Hop';
 
 class Api {
   private client: any = null;
@@ -44,6 +45,16 @@ class Api {
     const client: AxiosInstance = await this.createClient();
 
     await client.delete('/v1/recipe/' + id);
+  }
+
+  public async addHopToRecipe(hop: Hop, recipeId: number): Promise<Hop> {
+    const client: AxiosInstance = await this.createClient();
+
+    hop.quantity = +hop.quantity;
+
+    const response = await client.post<Hop>('/v1/recipe/' + recipeId + '/hop', hop);
+
+    return new Hop(response.data);
   }
 
   private async createClient(): Promise<any> {
