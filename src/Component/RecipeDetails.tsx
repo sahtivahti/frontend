@@ -4,9 +4,11 @@ import { useParams } from 'react-router-dom';
 import { CircularProgress, TextField, Grid, makeStyles, Theme, createStyles, Typography, Button } from '@material-ui/core';
 import Recipe from '../Model/Recipe';
 import api from '../Service/Api';
-import moment from 'moment';
 import Paper from './Paper';
 import RemoveRecipeButton from './RemoveRecipeButton';
+import RecipeTimestamps from './RecipeTimestamps';
+import RecipeHops from './RecipeHops';
+import Hop from '../Model/Hop';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -39,6 +41,27 @@ const RecipeDetails: React.FC = () => {
     setSaving(false);
   };
 
+  const handleAddHop = (hop: Hop) => {
+    recipe?.hops.push(hop);
+
+    if (!recipe) {
+      return;
+    }
+
+    setRecipe({ ...recipe, hops: recipe.hops });
+  };
+
+  const handleRemoveHop = (hop: Hop) => {
+    if (!recipe) {
+      return;
+    }
+
+    const hopIndex = recipe.hops.findIndex(x => x.id === hop.id);
+    recipe.hops.splice(hopIndex, 1);
+
+    setRecipe({ ...recipe, hops: recipe.hops });
+  };
+
   useEffect(() => {
     (async () => {
       setLoading(true);
@@ -62,14 +85,6 @@ const RecipeDetails: React.FC = () => {
     return <Typography>Can't load recipe :/</Typography>
   }
 
-  const createdAt = 'Created ' + moment(recipe.createdAt || undefined).fromNow();
-  
-  let updatedAt = 'never updated';
-
-  if (recipe.createdAt?.toString() !== recipe.updatedAt?.toString()) {
-    updatedAt = 'updated ' + moment(recipe.updatedAt || undefined).fromNow();
-  } 
-
   return (
     <React.Fragment>
       <Grid container direction="row" alignContent="space-between" alignItems="flex-start">
@@ -81,11 +96,10 @@ const RecipeDetails: React.FC = () => {
         </Grid>
       </Grid>
 
-      <Typography variant="body2">{createdAt}, {updatedAt}</Typography>
-
+      <RecipeTimestamps recipe={recipe} />
       <br />
 
-      <Grid container>
+      <Grid container spacing={2}>
         <Grid item xs={12} md={4}>
           <Paper>
             <Title size="small">Basics</Title>
@@ -138,7 +152,9 @@ const RecipeDetails: React.FC = () => {
           </Paper>
         </Grid>
 
-        <Grid item xs></Grid>
+        <Grid item xs>
+          <RecipeHops recipe={recipe} onHopAdded={handleAddHop} onHopRemoved={handleRemoveHop} />
+        </Grid>
       </Grid>
     </React.Fragment>
   );
