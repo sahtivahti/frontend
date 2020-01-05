@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import Title from './Title';
 import { useParams } from 'react-router-dom';
-import { CircularProgress, TextField, Grid, makeStyles, Theme, createStyles, Typography, Button, Table, TableHead, TableRow, TableCell, TableBody, IconButton } from '@material-ui/core';
+import { CircularProgress, TextField, Grid, makeStyles, Theme, createStyles, Typography, Button } from '@material-ui/core';
 import Recipe from '../Model/Recipe';
 import api from '../Service/Api';
 import Paper from './Paper';
 import RemoveRecipeButton from './RemoveRecipeButton';
 import RecipeTimestamps from './RecipeTimestamps';
+import RecipeHops from './RecipeHops';
 import Hop from '../Model/Hop';
-import NewHopDialog from './NewHopDialog';
-import DeleteIcon from '@material-ui/icons/Delete';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -29,7 +28,6 @@ const RecipeDetails: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [recipe, setRecipe] = useState<Recipe|null>();
   const [saving, setSaving] = useState<boolean>(false);
-  const [newHopDialogOpen, setNewHopDialogOpen] = useState<boolean>(false);
 
   const handleChange = (key: string) => (e: any) => {
     setRecipe(new Recipe({ ...recipe, [key]: e.target.value }));
@@ -43,38 +41,25 @@ const RecipeDetails: React.FC = () => {
     setSaving(false);
   };
 
-  const handleAddNewHop = async () => {
-    setNewHopDialogOpen(true);
-  };
+  const handleAddHop = (hop: Hop) => {
+    recipe?.hops.push(hop);
 
-  const handleNewHopDialogResult = async (hop?: Hop) => {
-    setNewHopDialogOpen(false);
-    
-    if (!hop || !recipe) {
+    if (!recipe) {
       return;
     }
 
-    setSaving(true);
-    const result = await api.addHopToRecipe(hop, recipe.id);
-    recipe.hops.push(result);
-
-    setSaving(false);
+    setRecipe({ ...recipe, hops: recipe.hops });
   };
 
-  const handleRemoveHop = (hopIndex: number) => {
-    return async () => {
-      if (!recipe) {
-        return;
-      }
-  
-      const hop = recipe.hops[hopIndex];
-  
-      await api.removeHopFromRecipe(hop.id, recipe.id);
+  const handleRemoveHop = (hop: Hop) => {
+    if (!recipe) {
+      return;
+    }
 
-      recipe.hops.splice(hopIndex, 1);
+    const hopIndex = recipe.hops.findIndex(x => x.id === hop.id);
+    recipe.hops.splice(hopIndex, 1);
 
-      setRecipe({ ...recipe, hops: recipe.hops });
-    };
+    setRecipe({ ...recipe, hops: recipe.hops });
   };
 
   useEffect(() => {
@@ -168,47 +153,9 @@ const RecipeDetails: React.FC = () => {
         </Grid>
 
         <Grid item xs>
-          <Paper>
-            <Grid container direction="row">
-              <Grid item xs>
-                <Title size="small">Hops</Title>
-              </Grid>
-              <Grid item>
-                <Button color="primary" onClick={handleAddNewHop}>
-                  New hop
-                </Button>
-              </Grid>
-            </Grid>
-
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell>Name</TableCell>
-                  <TableCell>Quantity (g)</TableCell>
-                  <TableCell>Time</TableCell>
-                  <TableCell padding="checkbox"></TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {recipe.hops.map((hop, i) => (
-                  <TableRow key={i}>
-                    <TableCell component="th">{hop.name}</TableCell>
-                    <TableCell>{hop.quantity}</TableCell>
-                    <TableCell>n/a</TableCell>
-                    <TableCell>
-                      <IconButton size="small" onClick={handleRemoveHop(i)}>
-                        <DeleteIcon />
-                      </IconButton>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </Paper>
+          <RecipeHops recipe={recipe} onHopAdded={handleAddHop} onHopRemoved={handleRemoveHop} />
         </Grid>
       </Grid>
-
-      <NewHopDialog open={newHopDialogOpen} onClose={handleNewHopDialogResult} />
     </React.Fragment>
   );
 };
