@@ -4,9 +4,9 @@ import { useParams } from 'react-router-dom';
 import { CircularProgress, TextField, Grid, makeStyles, Theme, createStyles, Typography, Button } from '@material-ui/core';
 import Recipe from '../Model/Recipe';
 import api from '../Service/Api';
-import moment from 'moment';
 import Paper from './Paper';
 import RemoveRecipeButton from './RemoveRecipeButton';
+import RecipeTimestamps from './RecipeTimestamps';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -62,14 +62,6 @@ const RecipeDetails: React.FC = () => {
     return <Typography>Can't load recipe :/</Typography>
   }
 
-  const createdAt = 'Created ' + moment(recipe.createdAt || undefined).fromNow();
-  
-  let updatedAt = 'never updated';
-
-  if (recipe.createdAt?.toString() !== recipe.updatedAt?.toString()) {
-    updatedAt = 'updated ' + moment(recipe.updatedAt || undefined).fromNow();
-  } 
-
   return (
     <React.Fragment>
       <Grid container direction="row" alignContent="space-between" alignItems="flex-start">
@@ -81,8 +73,7 @@ const RecipeDetails: React.FC = () => {
         </Grid>
       </Grid>
 
-      <Typography variant="body2">{createdAt}, {updatedAt}</Typography>
-
+      <RecipeTimestamps recipe={recipe} />
       <br />
 
       <Grid container>
