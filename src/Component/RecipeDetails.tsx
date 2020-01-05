@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Title from './Title';
 import { useParams } from 'react-router-dom';
-import { CircularProgress, TextField, Grid, makeStyles, Theme, createStyles, Typography, Button } from '@material-ui/core';
+import { CircularProgress, TextField, Grid, makeStyles, Theme, createStyles, Typography, Button, Table, TableHead, TableRow, TableCell, TableBody } from '@material-ui/core';
 import Recipe from '../Model/Recipe';
 import api from '../Service/Api';
 import Paper from './Paper';
@@ -76,7 +76,7 @@ const RecipeDetails: React.FC = () => {
       <RecipeTimestamps recipe={recipe} />
       <br />
 
-      <Grid container>
+      <Grid container spacing={2}>
         <Grid item xs={12} md={4}>
           <Paper>
             <Title size="small">Basics</Title>
@@ -129,7 +129,30 @@ const RecipeDetails: React.FC = () => {
           </Paper>
         </Grid>
 
-        <Grid item xs></Grid>
+        <Grid item xs>
+          <Paper>
+            <Title size="small">Hops</Title>
+
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Name</TableCell>
+                  <TableCell>Quantity (g)</TableCell>
+                  <TableCell>Time</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {recipe.hops.map((hop, i) => (
+                  <TableRow>
+                    <TableCell>{hop.name}</TableCell>
+                    <TableCell>{hop.quantity}</TableCell>
+                    <TableCell>n/a</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </Paper>
+        </Grid>
       </Grid>
     </React.Fragment>
   );
