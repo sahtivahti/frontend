@@ -57,6 +57,14 @@ class Api {
     return new Hop(response.data);
   }
 
+  public async removeHopFromRecipe(hopId: number, recipeId: number): Promise<Hop> {
+    const client: AxiosInstance = await this.createClient();
+
+    const response = await client.delete<Hop>('/v1/recipe/' + recipeId + '/hop/' + hopId);
+
+    return new Hop(response.data);
+  }
+
   private async createClient(): Promise<any> {
     if (!this.client) {
       const token = await getTokenSilently();

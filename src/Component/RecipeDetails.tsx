@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Title from './Title';
 import { useParams } from 'react-router-dom';
-import { CircularProgress, TextField, Grid, makeStyles, Theme, createStyles, Typography, Button, Table, TableHead, TableRow, TableCell, TableBody } from '@material-ui/core';
+import { CircularProgress, TextField, Grid, makeStyles, Theme, createStyles, Typography, Button, Table, TableHead, TableRow, TableCell, TableBody, IconButton } from '@material-ui/core';
 import Recipe from '../Model/Recipe';
 import api from '../Service/Api';
 import Paper from './Paper';
@@ -9,6 +9,7 @@ import RemoveRecipeButton from './RemoveRecipeButton';
 import RecipeTimestamps from './RecipeTimestamps';
 import Hop from '../Model/Hop';
 import NewHopDialog from './NewHopDialog';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -58,6 +59,22 @@ const RecipeDetails: React.FC = () => {
     recipe.hops.push(result);
 
     setSaving(false);
+  };
+
+  const handleRemoveHop = (hopIndex: number) => {
+    return async () => {
+      if (!recipe) {
+        return;
+      }
+  
+      const hop = recipe.hops[hopIndex];
+  
+      await api.removeHopFromRecipe(hop.id, recipe.id);
+
+      recipe.hops.splice(hopIndex, 1);
+
+      setRecipe({ ...recipe, hops: recipe.hops });
+    };
   };
 
   useEffect(() => {
@@ -169,6 +186,7 @@ const RecipeDetails: React.FC = () => {
                   <TableCell>Name</TableCell>
                   <TableCell>Quantity (g)</TableCell>
                   <TableCell>Time</TableCell>
+                  <TableCell padding="checkbox"></TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -177,6 +195,11 @@ const RecipeDetails: React.FC = () => {
                     <TableCell component="th">{hop.name}</TableCell>
                     <TableCell>{hop.quantity}</TableCell>
                     <TableCell>n/a</TableCell>
+                    <TableCell>
+                      <IconButton size="small" onClick={handleRemoveHop(i)}>
+                        <DeleteIcon />
+                      </IconButton>
+                    </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
