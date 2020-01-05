@@ -143,7 +143,7 @@ const RecipeDetails: React.FC = () => {
               </TableHead>
               <TableBody>
                 {recipe.hops.map((hop, i) => (
-                  <TableRow>
+                  <TableRow key={i}>
                     <TableCell>{hop.name}</TableCell>
                     <TableCell>{hop.quantity}</TableCell>
                     <TableCell>n/a</TableCell>
