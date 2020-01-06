@@ -11,11 +11,13 @@ type Props = {
 const NewHopDialog: React.FC<Props> = (props: Props) => {
   const [name, setName] = useState<string>();
   const [quantity, setQuantity] = useState<number>();
+  const [time, setTime] = useState<number>();
 
   const handleSave = () => {
     const hop = new Hop({
       name,
-      quantity
+      quantity,
+      time
     });
 
     props.onClose(hop);
@@ -44,6 +46,14 @@ const NewHopDialog: React.FC<Props> = (props: Props) => {
           label="Quantity (g)"
           fullWidth
           onChange={(e) => setQuantity(+e.target.value)}
+        />
+        <TextField
+          type="number"
+          margin="dense"
+          id="time"
+          label="Time from boil end (minutes)"
+          fullWidth
+          onChange={(e) => setTime(+e.target.value)}
         />
       </DialogContent>
       <DialogActions>
