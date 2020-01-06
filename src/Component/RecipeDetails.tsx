@@ -11,6 +11,7 @@ import RecipeHops from './RecipeHops';
 import Hop from '../Model/Hop';
 import RecipeFermentables from './RecipeFermentables';
 import Fermentable from '../Model/Fermentable';
+import RecipeMeta from './RecipeMeta';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -110,9 +111,12 @@ const RecipeDetails: React.FC = () => {
 
   return (
     <React.Fragment>
-      <Grid container direction="row" alignContent="space-between" alignItems="flex-start">
-        <Grid item xs>
+      <Grid container direction="row" alignContent="space-between" alignItems="flex-start" spacing={2}>
+        <Grid item>
           <Title>Editing recipe "{recipe.name}"</Title>
+        </Grid>
+        <Grid item xs>
+          <RecipeMeta recipe={recipe} />
         </Grid>
         <Grid item>
           <RemoveRecipeButton recipeId={recipe.id} />
