@@ -122,7 +122,7 @@ const RecipeDetails: React.FC = () => {
         <Grid item xs={12} md={6}>
           <RecipeMeta recipe={recipe} />
         </Grid>
-        <Grid item>
+        <Grid item container xs={3} justify="flex-end">
           <RemoveRecipeButton recipeId={recipe.id} />
         </Grid>
       </Grid>
