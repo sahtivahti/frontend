@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Recipe from '../Model/Recipe';
 import Paper from './Paper';
-import { Grid, Button, Table, TableHead, TableRow, TableCell, TableBody, IconButton, CircularProgress } from '@material-ui/core';
+import { Grid, Button, Table, TableHead, TableRow, TableCell, TableBody, IconButton, CircularProgress, TableFooter } from '@material-ui/core';
 import Title from './Title';
 import NewFermentableDialog from './NewFermentableDialog';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -52,6 +52,8 @@ const RecipeFermentables: React.FC<Props> = ({ recipe, onFermentableAdded, onFer
     };
   };
 
+  const sortFermentables = (a: Fermentable, b: Fermentable) => b.quantity - a.quantity;
+
   return (
     <Paper>
       <Grid container direction="row">
@@ -75,7 +77,7 @@ const RecipeFermentables: React.FC<Props> = ({ recipe, onFermentableAdded, onFer
           </TableRow>
         </TableHead>
         <TableBody>
-          {recipe.fermentables.map((fermentable, i) => (
+          {recipe.fermentables.sort(sortFermentables).map((fermentable, i) => (
             <TableRow key={i}>
               <TableCell component="th">{fermentable.name}</TableCell>
               <TableCell>{fermentable.quantity.toFixed(2)}</TableCell>
@@ -91,6 +93,19 @@ const RecipeFermentables: React.FC<Props> = ({ recipe, onFermentableAdded, onFer
             </TableRow>
           ))}
         </TableBody>
+        <TableFooter>
+          <TableRow>
+            <TableCell>Total</TableCell>
+            <TableCell>
+              {recipe.fermentables.reduce(
+                (total: number, f: Fermentable) => total += f.quantity, 
+                0
+              ).toFixed(2)}
+            </TableCell>
+            <TableCell>-</TableCell>
+            <TableCell>-</TableCell>
+          </TableRow>
+        </TableFooter>
       </Table>
       <NewFermentableDialog open={newFermentableDialogOpen} onClose={handleNewFermentableDialogResult} />
     </Paper>

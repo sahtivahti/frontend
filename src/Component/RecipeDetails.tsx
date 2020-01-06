@@ -112,7 +112,7 @@ const RecipeDetails: React.FC = () => {
     <React.Fragment>
       <Grid container direction="row" alignContent="space-between" alignItems="flex-start">
         <Grid item xs>
-          <Title>Editing recipe {id}</Title>
+          <Title>Editing recipe "{recipe.name}"</Title>
         </Grid>
         <Grid item>
           <RemoveRecipeButton recipeId={recipe.id} />
