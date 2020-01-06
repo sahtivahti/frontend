@@ -15,4 +15,8 @@ export default class Recipe {
   public updatedAt: Date|null = null;
   public hops: Hop[] = [];
   public fermentables: Fermentable[] = [];
+  public ibu: number|undefined;
+  public color: number|undefined;
+  public abv: number|undefined;
+  public colorName: string|undefined;
 }

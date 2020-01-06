@@ -11,6 +11,7 @@ import RecipeHops from './RecipeHops';
 import Hop from '../Model/Hop';
 import RecipeFermentables from './RecipeFermentables';
 import Fermentable from '../Model/Fermentable';
+import RecipeMeta from './RecipeMeta';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -37,9 +38,13 @@ const RecipeDetails: React.FC = () => {
 
   const handleSave = async () => {
     setSaving(true);
+    
     const result = await api.updateRecipe(recipe as Recipe);
 
-    setRecipe(result);
+    // Remove this after sahtivahti/apigw#15 is fixed
+    const hack = JSON.parse(JSON.stringify(result));
+
+    setRecipe({...recipe, ...hack});
     setSaving(false);
   };
 
@@ -110,11 +115,14 @@ const RecipeDetails: React.FC = () => {
 
   return (
     <React.Fragment>
-      <Grid container direction="row" alignContent="space-between" alignItems="flex-start">
-        <Grid item xs>
+      <Grid container direction="row" alignContent="space-between" alignItems="flex-start" spacing={2}>
+        <Grid item>
           <Title>Editing recipe "{recipe.name}"</Title>
         </Grid>
-        <Grid item>
+        <Grid item xs={12} md={6}>
+          <RecipeMeta recipe={recipe} />
+        </Grid>
+        <Grid item container xs={3} justify="flex-end">
           <RemoveRecipeButton recipeId={recipe.id} />
         </Grid>
       </Grid>
