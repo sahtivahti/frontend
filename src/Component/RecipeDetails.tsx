@@ -38,9 +38,13 @@ const RecipeDetails: React.FC = () => {
 
   const handleSave = async () => {
     setSaving(true);
+    
     const result = await api.updateRecipe(recipe as Recipe);
 
-    setRecipe(result);
+    // Remove this after sahtivahti/apigw#15 is fixed
+    const hack = JSON.parse(JSON.stringify(result));
+
+    setRecipe({...recipe, ...hack});
     setSaving(false);
   };
 
