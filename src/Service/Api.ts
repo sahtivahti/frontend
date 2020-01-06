@@ -3,6 +3,7 @@ import Recipe from '../Model/Recipe';
 import { getTokenSilently } from '../Auth0Connect';
 import axios, { AxiosInstance } from 'axios';
 import Hop from '../Model/Hop';
+import Fermentable from '../Model/Fermentable';
 
 class Api {
   private client: any = null;
@@ -63,6 +64,25 @@ class Api {
     const response = await client.delete<Hop>('/v1/recipe/' + recipeId + '/hop/' + hopId);
 
     return new Hop(response.data);
+  }
+
+  public async addFermentableToRecipe(fermentable: Fermentable, recipeId: number): Promise<Fermentable> {
+    const client: AxiosInstance = await this.createClient();
+
+    fermentable.quantity = +fermentable.quantity;
+    fermentable.color = +fermentable.color;
+
+    const response = await client.post<Fermentable>('/v1/recipe/' + recipeId + '/fermentable', fermentable);
+
+    return new Fermentable(response.data);
+  }
+
+  public async removeFermentableFromRecipe(fermentableId: number, recipeId: number): Promise<Fermentable> {
+    const client: AxiosInstance = await this.createClient();
+
+    const response = await client.delete<Fermentable>('/v1/recipe/' + recipeId + '/fermentable/' + fermentableId);
+
+    return new Fermentable(response.data);
   }
 
   private async createClient(): Promise<any> {
