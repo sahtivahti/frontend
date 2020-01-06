@@ -119,7 +119,7 @@ const RecipeDetails: React.FC = () => {
         <Grid item>
           <Title>Editing recipe "{recipe.name}"</Title>
         </Grid>
-        <Grid item xs>
+        <Grid item xs={12} md={6}>
           <RecipeMeta recipe={recipe} />
         </Grid>
         <Grid item>
