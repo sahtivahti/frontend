@@ -1,4 +1,5 @@
 import Hop from './Hop';
+import Fermentable from './Fermentable';
 
 export default class Recipe {
   constructor(data?: any) {
@@ -13,4 +14,5 @@ export default class Recipe {
   public createdAt: Date|null = null;
   public updatedAt: Date|null = null;
   public hops: Hop[] = [];
+  public fermentables: Fermentable[] = [];
 }

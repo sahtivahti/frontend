@@ -1,23 +1,23 @@
 import React, { useState } from 'react';
 import { Dialog, DialogActions, Button, DialogContent, DialogTitle, DialogContentText, TextField } from '@material-ui/core';
 import PropTypes from 'prop-types';
-import Hop from '../Model/Hop';
+import Fermentable from '../Model/Fermentable';
 
 type Props = {
   open: boolean,
-  onClose: (hop?: Hop) => void
+  onClose: (fermentable?: Fermentable) => void
 }
 
-const NewHopDialog: React.FC<Props> = (props: Props) => {
+const NewFermentableDialog: React.FC<Props> = (props: Props) => {
   const [name, setName] = useState<string>();
   const [quantity, setQuantity] = useState<number>();
-  const [time, setTime] = useState<number>();
+  const [color, setColor] = useState<number>();
 
   const handleSave = () => {
-    const hop = new Hop({
+    const hop = new Fermentable({
       name,
       quantity,
-      time
+      color
     });
 
     props.onClose(hop);
@@ -25,7 +25,7 @@ const NewHopDialog: React.FC<Props> = (props: Props) => {
 
   return (
     <Dialog open={props.open} onClose={() => props.onClose()} aria-labelledby="form-dialog-title">
-      <DialogTitle id="form-dialog-title">Add hop</DialogTitle>
+      <DialogTitle id="form-dialog-title">Add fermentable</DialogTitle>
       <DialogContent>
         <DialogContentText>
           Please fill required fields
@@ -43,17 +43,17 @@ const NewHopDialog: React.FC<Props> = (props: Props) => {
           type="number"
           margin="dense"
           id="quantity"
-          label="Quantity (g)"
+          label="Quantity (kg)"
           fullWidth
           onChange={(e) => setQuantity(+e.target.value)}
         />
         <TextField
           type="number"
           margin="dense"
-          id="time"
-          label="Time from boil end (minutes)"
+          id="color"
+          label="Color (EBC)"
           fullWidth
-          onChange={(e) => setTime(+e.target.value)}
+          onChange={(e) => setColor(+e.target.value)}
         />
       </DialogContent>
       <DialogActions>
@@ -68,9 +68,9 @@ const NewHopDialog: React.FC<Props> = (props: Props) => {
   );
 };
 
-NewHopDialog.propTypes = {
+NewFermentableDialog.propTypes = {
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired
 };
 
-export default NewHopDialog;
+export default NewFermentableDialog;

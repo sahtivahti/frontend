@@ -9,6 +9,8 @@ import RemoveRecipeButton from './RemoveRecipeButton';
 import RecipeTimestamps from './RecipeTimestamps';
 import RecipeHops from './RecipeHops';
 import Hop from '../Model/Hop';
+import RecipeFermentables from './RecipeFermentables';
+import Fermentable from '../Model/Fermentable';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -62,6 +64,27 @@ const RecipeDetails: React.FC = () => {
     setRecipe({ ...recipe, hops: recipe.hops });
   };
 
+  const handleAddFermentable = (fermentable: Fermentable) => {
+    if (!recipe) {
+      return;
+    }
+
+    recipe.fermentables.push(fermentable);    
+
+    setRecipe({ ...recipe, fermentables: recipe.fermentables });
+  };
+
+  const handleRemoveFermentable = (fermentable: Fermentable) => {
+    if (!recipe) {
+      return;
+    }
+
+    const fermentableIndex = recipe.fermentables.findIndex(x => x.id === fermentable.id);
+    recipe.fermentables.splice(fermentableIndex, 1);
+
+    setRecipe({ ...recipe, fermentables: recipe.fermentables });
+  };
+
   useEffect(() => {
     (async () => {
       setLoading(true);
@@ -89,7 +112,7 @@ const RecipeDetails: React.FC = () => {
     <React.Fragment>
       <Grid container direction="row" alignContent="space-between" alignItems="flex-start">
         <Grid item xs>
-          <Title>Editing recipe {id}</Title>
+          <Title>Editing recipe "{recipe.name}"</Title>
         </Grid>
         <Grid item>
           <RemoveRecipeButton recipeId={recipe.id} />
@@ -100,7 +123,7 @@ const RecipeDetails: React.FC = () => {
       <br />
 
       <Grid container spacing={2}>
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={6}>
           <Paper>
             <Title size="small">Basics</Title>
 
@@ -152,8 +175,20 @@ const RecipeDetails: React.FC = () => {
           </Paper>
         </Grid>
 
-        <Grid item xs>
-          <RecipeHops recipe={recipe} onHopAdded={handleAddHop} onHopRemoved={handleRemoveHop} />
+        <Grid item xs={12} md={6}>
+          <RecipeHops 
+            recipe={recipe} 
+            onHopAdded={handleAddHop} 
+            onHopRemoved={handleRemoveHop} 
+          />
+        </Grid>
+
+        <Grid item xs={12} md={6}>
+          <RecipeFermentables
+            recipe={recipe} 
+            onFermentableAdded={handleAddFermentable} 
+            onFermentableRemoved={handleRemoveFermentable} 
+          />
         </Grid>
       </Grid>
     </React.Fragment>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Recipe from '../Model/Recipe';
 import Paper from './Paper';
-import { Grid, Button, Table, TableHead, TableRow, TableCell, TableBody, IconButton, CircularProgress } from '@material-ui/core';
+import { Grid, Button, Table, TableHead, TableRow, TableCell, TableBody, IconButton, CircularProgress, TableFooter } from '@material-ui/core';
 import Title from './Title';
 import NewHopDialog from './NewHopDialog';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -70,16 +70,16 @@ const RecipeHops: React.FC<Props> = ({ recipe, onHopAdded, onHopRemoved }) => {
           <TableRow>
             <TableCell>Name</TableCell>
             <TableCell>Quantity (g)</TableCell>
-            <TableCell>Time</TableCell>
+            <TableCell>Time (min)</TableCell>
             <TableCell padding="checkbox"></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {recipe.hops.map((hop, i) => (
+          {recipe.hops.sort((a: Hop, b: Hop) => b.time - a.time).map((hop, i) => (
             <TableRow key={i}>
               <TableCell component="th">{hop.name}</TableCell>
-              <TableCell>{hop.quantity}</TableCell>
-              <TableCell>n/a</TableCell>
+              <TableCell>{hop.quantity.toFixed(2)}</TableCell>
+              <TableCell>{hop.time}</TableCell>
               <TableCell>
                 <IconButton size="small" onClick={handleRemoveHop(i)}>
                   {hopRemovals.indexOf(hop.id) >= 0 ?
@@ -91,6 +91,19 @@ const RecipeHops: React.FC<Props> = ({ recipe, onHopAdded, onHopRemoved }) => {
             </TableRow>
           ))}
         </TableBody>
+        <TableFooter>
+          <TableRow>
+            <TableCell>Total</TableCell>
+            <TableCell>
+              {recipe.hops.reduce(
+                (total: number, h: Hop) => total += h.quantity, 
+                0
+              ).toFixed(2)}
+            </TableCell>
+            <TableCell>-</TableCell>
+            <TableCell>-</TableCell>
+          </TableRow>
+        </TableFooter>
       </Table>
       <NewHopDialog open={newHopDialogOpen} onClose={handleNewHopDialogResult} />
     </Paper>

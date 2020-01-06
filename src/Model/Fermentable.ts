@@ -1,4 +1,4 @@
-export default class Hop {
+export default class Fermentable {
   constructor(data?: any) {
     Object.assign(this, data);
   }
@@ -6,5 +6,5 @@ export default class Hop {
   public id: number = 0;
   public name: string = '';
   public quantity: number = 0.0;
-  public time: number = 0;
+  public color: number = 0;
 }
