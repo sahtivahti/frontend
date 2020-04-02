@@ -9,7 +9,7 @@ ReactDOM.render(
   <Auth0Provider
     domain={config.auth0.domain}
     client_id={config.auth0.clientId}
-    redirect_uri={window.location.origin}
+    redirect_uri={window.location.origin + '/app'}
     audience={config.auth0.audience}
     logout
   >

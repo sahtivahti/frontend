@@ -1,6 +1,6 @@
 import React from 'react';
 import Dashboard from './Component/Dashboard';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { HashRouter as Router } from 'react-router-dom';
 import SignIn from './Component/SignIn';
 import { useAuth0 } from './Auth0Connect';
 
