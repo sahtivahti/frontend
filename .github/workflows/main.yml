@@ -1,6 +1,9 @@
 name: CI
 
-on: [ push ]
+on:
+  push:
+    branches:
+      - master
 
 jobs:
   build:
@@ -9,10 +12,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@master
-      - name: Publish to DockerHub
-        uses: elgohr/Publish-Docker-Github-Action@master
+      - name: Setup Node
+      - uses: actions/setup-node@v1
         with:
-          name: sahtivahti/frontend
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-          tag_names: true
+          node-version: '12.x'
+      - name: Install Packages
+        run: yarn install
+      - name: Publish Github Pages
+        run: yarn run deploy

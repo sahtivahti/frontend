@@ -1,4 +1,3 @@
-import config from './AppConfig';
 import Recipe from '../Model/Recipe';
 import { getTokenSilently } from '../Auth0Connect';
 import axios, { AxiosInstance } from 'axios';
@@ -90,7 +89,7 @@ class Api {
       const token = await getTokenSilently();
     
       this.client = axios.create({
-        baseURL: config.api.baseUri,
+        baseURL: 'https://7u8bn8w876.execute-api.eu-west-1.amazonaws.com/prod/',
         headers: {
           Authorization: `Bearer ${token}`
         }
