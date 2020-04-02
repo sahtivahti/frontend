@@ -11,7 +11,7 @@ class Api {
     const client: AxiosInstance = await this.createClient();
 
     const response = await client.get<Recipe[]>('/v1/recipe');
-    
+
     return response.data.map((x: any) => new Recipe(x));
   }
 
@@ -35,7 +35,7 @@ class Api {
 
   public async getRecipeDetailsById(id: number): Promise<Recipe> {
     const client: AxiosInstance = await this.createClient();
-    
+
     const response = await client.get<Recipe>('/v1/recipe/' + id);
 
     return new Recipe(response.data);
@@ -87,9 +87,9 @@ class Api {
   private async createClient(): Promise<any> {
     if (!this.client) {
       const token = await getTokenSilently();
-    
+
       this.client = axios.create({
-        baseURL: 'https://7u8bn8w876.execute-api.eu-west-1.amazonaws.com/prod/',
+        baseURL: 'https://rlylkxiomh.execute-api.eu-west-1.amazonaws.com/prod/',
         headers: {
           Authorization: `Bearer ${token}`
         }
