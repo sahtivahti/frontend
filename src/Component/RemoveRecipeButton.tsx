@@ -6,7 +6,7 @@ import api from '../Service/Api';
 import { Redirect } from 'react-router-dom';
 
 type Props = {
-  recipeId: number
+  recipeId: string
 };
 
 const RemoveRecipeButton: React.FC<Props> = (props: Props) => {
@@ -43,7 +43,7 @@ const RemoveRecipeButton: React.FC<Props> = (props: Props) => {
         {removing ? <CircularProgress size={24} /> : <Icon><RemoveIcon /></Icon>}
         Remove this recipe
       </Button>
-      <Confirm 
+      <Confirm
         text="Do you really want to remove this recipe?"
         open={confirmOpen}
         onClose={handleConfirmResult}

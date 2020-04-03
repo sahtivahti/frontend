@@ -3,7 +3,7 @@ export default class Fermentable {
     Object.assign(this, data);
   }
 
-  public id: number = 0;
+  public id: string = '';
   public name: string = '';
   public quantity: number = 0.0;
   public color: number = 0;

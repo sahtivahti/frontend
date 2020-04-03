@@ -13,7 +13,7 @@ type Props = {
 
 const NewRecipeDialog: React.FC<Props> = (props: Props) => {
   const [name, setName] = useState<string>();
-  const [recipeId, setRecipeId] = useState<number>();
+  const [recipeId, setRecipeId] = useState<string>();
   const [saving, setSaving] = useState<boolean>(false);
 
   const { user } = useAuth0();

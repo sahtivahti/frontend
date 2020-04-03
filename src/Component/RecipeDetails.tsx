@@ -38,7 +38,7 @@ const RecipeDetails: React.FC = () => {
 
   const handleSave = async () => {
     setSaving(true);
-    
+
     const result = await api.updateRecipe(recipe as Recipe);
 
     // Remove this after sahtivahti/apigw#15 is fixed
@@ -74,7 +74,7 @@ const RecipeDetails: React.FC = () => {
       return;
     }
 
-    recipe.fermentables.push(fermentable);    
+    recipe.fermentables.push(fermentable);
 
     setRecipe({ ...recipe, fermentables: recipe.fermentables });
   };
@@ -93,12 +93,12 @@ const RecipeDetails: React.FC = () => {
   useEffect(() => {
     (async () => {
       setLoading(true);
-      
+
       if (!id) {
         return;
       }
 
-      const recipe = await api.getRecipeDetailsById(parseInt(id));
+      const recipe = await api.getRecipeDetailsById(id);
 
       setRecipe(recipe);
       setLoading(false);
@@ -171,8 +171,8 @@ const RecipeDetails: React.FC = () => {
             </form>
 
             <Grid container direction="row" justify="flex-end">
-              <Button 
-                variant="contained" 
+              <Button
+                variant="contained"
                 color="primary"
                 onClick={handleSave}
                 disabled={saving}
@@ -184,18 +184,18 @@ const RecipeDetails: React.FC = () => {
         </Grid>
 
         <Grid item xs={12} md={6}>
-          <RecipeHops 
-            recipe={recipe} 
-            onHopAdded={handleAddHop} 
-            onHopRemoved={handleRemoveHop} 
+          <RecipeHops
+            recipe={recipe}
+            onHopAdded={handleAddHop}
+            onHopRemoved={handleRemoveHop}
           />
         </Grid>
 
         <Grid item xs={12} md={6}>
           <RecipeFermentables
-            recipe={recipe} 
-            onFermentableAdded={handleAddFermentable} 
-            onFermentableRemoved={handleRemoveFermentable} 
+            recipe={recipe}
+            onFermentableAdded={handleAddFermentable}
+            onFermentableRemoved={handleRemoveFermentable}
           />
         </Grid>
       </Grid>

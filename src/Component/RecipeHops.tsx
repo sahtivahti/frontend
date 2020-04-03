@@ -16,7 +16,7 @@ type Props = {
 
 const RecipeHops: React.FC<Props> = ({ recipe, onHopAdded, onHopRemoved }) => {
   const [newHopDialogOpen, setNewHopDialogOpen] = useState<boolean>(false);
-  const [hopRemovals, setHopRemovals] = useState<number[]>([]);
+  const [hopRemovals, setHopRemovals] = useState<string[]>([]);
 
   const handleAddNewHop = async () => {
     setNewHopDialogOpen(true);
@@ -24,7 +24,7 @@ const RecipeHops: React.FC<Props> = ({ recipe, onHopAdded, onHopRemoved }) => {
 
   const handleNewHopDialogResult = async (hop?: Hop) => {
     setNewHopDialogOpen(false);
-    
+
     if (!hop || !recipe) {
       return;
     }
@@ -39,10 +39,10 @@ const RecipeHops: React.FC<Props> = ({ recipe, onHopAdded, onHopRemoved }) => {
       if (!recipe) {
         return;
       }
-  
+
       const hop = recipe.hops[hopIndex];
       setHopRemovals([...hopRemovals, hop.id]);
-  
+
       await api.removeHopFromRecipe(hop.id, recipe.id);
 
       hopRemovals.splice(hopRemovals.indexOf(hop.id), 1);
@@ -83,7 +83,7 @@ const RecipeHops: React.FC<Props> = ({ recipe, onHopAdded, onHopRemoved }) => {
               <TableCell>
                 <IconButton size="small" onClick={handleRemoveHop(i)}>
                   {hopRemovals.indexOf(hop.id) >= 0 ?
-                    <CircularProgress size={24} /> : 
+                    <CircularProgress size={24} /> :
                     <DeleteIcon />
                   }
                 </IconButton>
@@ -96,7 +96,7 @@ const RecipeHops: React.FC<Props> = ({ recipe, onHopAdded, onHopRemoved }) => {
             <TableCell>Total</TableCell>
             <TableCell>
               {recipe.hops.reduce(
-                (total: number, h: Hop) => total += h.quantity, 
+                (total: number, h: Hop) => total += h.quantity,
                 0
               ).toFixed(2)}
             </TableCell>

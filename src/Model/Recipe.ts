@@ -6,7 +6,7 @@ export default class Recipe {
     Object.assign(this, data);
   }
 
-  public id: number = 0;
+  public id: string = '';
   public name: string = '';
   public author: string = '';
   public style: string = '';

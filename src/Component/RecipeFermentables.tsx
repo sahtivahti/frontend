@@ -16,7 +16,7 @@ type Props = {
 
 const RecipeFermentables: React.FC<Props> = ({ recipe, onFermentableAdded, onFermentableRemoved }) => {
   const [newFermentableDialogOpen, setNewFermentableDialogOpen] = useState<boolean>(false);
-  const [fermentableRemovals, setFermentableRemovals] = useState<number[]>([]);
+  const [fermentableRemovals, setFermentableRemovals] = useState<string[]>([]);
 
   const handleAddNewFermentable = async () => {
     setNewFermentableDialogOpen(true);
@@ -24,7 +24,7 @@ const RecipeFermentables: React.FC<Props> = ({ recipe, onFermentableAdded, onFer
 
   const handleNewFermentableDialogResult = async (fermentable?: Fermentable) => {
     setNewFermentableDialogOpen(false);
-    
+
     if (!fermentable || !recipe) {
       return;
     }
@@ -39,10 +39,10 @@ const RecipeFermentables: React.FC<Props> = ({ recipe, onFermentableAdded, onFer
       if (!recipe) {
         return;
       }
-  
+
       const fermentable = recipe.fermentables[fermentableIndex];
       setFermentableRemovals([...fermentableRemovals, fermentable.id]);
-  
+
       await api.removeFermentableFromRecipe(fermentable.id, recipe.id);
 
       fermentableRemovals.splice(fermentableRemovals.indexOf(fermentable.id), 1);
@@ -85,7 +85,7 @@ const RecipeFermentables: React.FC<Props> = ({ recipe, onFermentableAdded, onFer
               <TableCell>
                 <IconButton size="small" onClick={handleRemoveFermentable(i)}>
                   {fermentableRemovals.indexOf(fermentable.id) >= 0 ?
-                    <CircularProgress size={24} /> : 
+                    <CircularProgress size={24} /> :
                     <DeleteIcon />
                   }
                 </IconButton>
@@ -98,7 +98,7 @@ const RecipeFermentables: React.FC<Props> = ({ recipe, onFermentableAdded, onFer
             <TableCell>Total</TableCell>
             <TableCell>
               {recipe.fermentables.reduce(
-                (total: number, f: Fermentable) => total += f.quantity, 
+                (total: number, f: Fermentable) => total += f.quantity,
                 0
               ).toFixed(2)}
             </TableCell>

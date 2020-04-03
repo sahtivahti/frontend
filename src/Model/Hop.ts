@@ -3,7 +3,7 @@ export default class Hop {
     Object.assign(this, data);
   }
 
-  public id: number = 0;
+  public id: string = '';
   public name: string = '';
   public quantity: number = 0.0;
   public time: number = 0;
