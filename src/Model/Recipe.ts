@@ -8,8 +8,8 @@ export default class Recipe {
 
   public id: string = '';
   public name: string = '';
-  public author: string = '';
-  public style: string = '';
+  public author: string|undefined;
+  public style: string|undefined;
   public batchSize: number = 0;
   public createdAt: Date|null = null;
   public updatedAt: Date|null = null;
