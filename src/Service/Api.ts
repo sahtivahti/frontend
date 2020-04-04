@@ -41,7 +41,7 @@ class Api {
     return new Recipe(response.data);
   }
 
-  public async removeRecipeById(id: string): Promise<void> {
+  public async archiveRecipeById(id: string): Promise<void> {
     const client: AxiosInstance = await this.createClient();
 
     await client.delete('/recipes/' + id);

@@ -5,13 +5,12 @@ import { CircularProgress, TextField, Grid, makeStyles, Theme, createStyles, Typ
 import Recipe from '../Model/Recipe';
 import api from '../Service/Api';
 import Paper from './Paper';
-import RemoveRecipeButton from './RemoveRecipeButton';
+import ArchiveRecipeButton from './ArchiveRecipeButton';
 import RecipeTimestamps from './RecipeTimestamps';
 import RecipeHops from './RecipeHops';
 import Hop from '../Model/Hop';
 import RecipeFermentables from './RecipeFermentables';
 import Fermentable from '../Model/Fermentable';
-import RecipeMeta from './RecipeMeta';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -116,14 +115,11 @@ const RecipeDetails: React.FC = () => {
   return (
     <React.Fragment>
       <Grid container direction="row" alignContent="space-between" alignItems="flex-start" spacing={2}>
-        <Grid item>
+        <Grid item xs>
           <Title>Editing recipe "{recipe.name}"</Title>
         </Grid>
-        <Grid item xs={12} md={6}>
-          <RecipeMeta recipe={recipe} />
-        </Grid>
         <Grid item container xs={3} justify="flex-end">
-          <RemoveRecipeButton recipeId={recipe.id} />
+          <ArchiveRecipeButton recipeId={recipe.id} />
         </Grid>
       </Grid>
 

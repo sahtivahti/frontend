@@ -9,13 +9,13 @@ type Props = {
   recipeId: string
 };
 
-const RemoveRecipeButton: React.FC<Props> = (props: Props) => {
+const ArchiveRecipeButton: React.FC<Props> = (props: Props) => {
   const { recipeId } = props;
   const [confirmOpen, setConfirmOpen] = useState<boolean>(false);
-  const [recipeRemoved, setRecipeRemoved] = useState<boolean>(false);
-  const [removing, setRemoving] = useState<boolean>(false);
+  const [recipeArchived, setRecipeArchived] = useState<boolean>(false);
+  const [archiving, setArchiving] = useState<boolean>(false);
 
-  const handleRemove = () => {
+  const handleArchive = () => {
     setConfirmOpen(true);
   };
 
@@ -26,25 +26,25 @@ const RemoveRecipeButton: React.FC<Props> = (props: Props) => {
       return;
     }
 
-    setRemoving(true);
-    await api.removeRecipeById(recipeId);
-    setRemoving(false);
+    setArchiving(true);
+    await api.archiveRecipeById(recipeId);
+    setArchiving(false);
 
-    setRecipeRemoved(true);
+    setRecipeArchived(true);
   };
 
-  if (recipeRemoved) {
+  if (recipeArchived) {
     return <Redirect to="/recipes" />;
   }
 
   return (
     <React.Fragment>
-      <Button color="secondary" onClick={handleRemove}>
-        {removing ? <CircularProgress size={24} /> : <Icon><RemoveIcon /></Icon>}
-        Remove this recipe
+      <Button color="secondary" onClick={handleArchive}>
+        {archiving ? <CircularProgress size={24} /> : <Icon><RemoveIcon /></Icon>}
+        Archive
       </Button>
       <Confirm
-        text="Do you really want to remove this recipe?"
+        text="Do you really want to archive this recipe?"
         open={confirmOpen}
         onClose={handleConfirmResult}
       />
@@ -52,4 +52,4 @@ const RemoveRecipeButton: React.FC<Props> = (props: Props) => {
   );
 };
 
-export default RemoveRecipeButton;
+export default ArchiveRecipeButton;
