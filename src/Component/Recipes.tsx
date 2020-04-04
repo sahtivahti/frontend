@@ -38,19 +38,21 @@ const Recipes: React.FC = () => {
       </Grid>
 
       {recipes.length === 0 && <Shrug text="There are no recipes yet!" />}
-      
+
       {recipes.length > 0 && (<Table>
         <TableHead>
           <TableRow>
             <TableCell>Name</TableCell>
-            <TableCell>Author</TableCell>
+            <TableCell>Hops</TableCell>
+            <TableCell>Fermentables</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
         {recipes.map((recipe: Recipe) => (
           <TableRow key={recipe.id}>
             <TableCell><Link to={`${url}/${recipe.id}`}>{recipe.name}</Link></TableCell>
-            <TableCell>{recipe.author}</TableCell>
+            <TableCell>{recipe.hops.map(hop => hop.name).join(', ')}</TableCell>
+            <TableCell>{recipe.fermentables.map(f => f.name).join(', ')}</TableCell>
           </TableRow>
         ))}
         </TableBody>
